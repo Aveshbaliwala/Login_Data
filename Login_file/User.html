@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>User Page</title>
+	<style type="text/css">
+		.div1
+		{
+			height: 600px;
+			width:200px;
+			border:2px solid black;
+			float: left;
+			background-color: #e6ffbd;
+			font-family: lucida handwriting;
+        
+		} 
+		.div2
+		{
+			height: 600px;
+			width:900px;
+			border:2px solid black;
+			float: left;
+            background-color: white;
+			font-family: lucida handwriting;
+
+		} 
+		.div2 h2
+		{
+			margin-left: 30px;
+		}
+		.div2 #submit
+		{
+			margin-top: 10px;
+			margin-left: 560px; 
+			width: 115px;
+			background-color:#e6ffbd;
+			color:black;
+		}
+		.div1 #table1
+		{
+			margin-top: 25px;
+			padding: 10px;
+			border-spacing: 20px;
+		}
+		.div2 input
+		{
+			font-family: Times new roman;
+			font-size: 14px;
+		}
+		.div2 #table2
+		{
+			margin-bottom: 100px;
+			text-align: center;
+			border-collapse: collapse;
+			font-size: 16px;
+
+		}
+		.div2 #table2
+		{
+			width:90%;
+		}
+		.div2 th
+		{
+			background-color: darkolivegreen;
+			color:white;
+		}
+		.div2 td
+		{
+			background-color: #e6ffbd;
+			font-family: Cursive;
+		}
+		.div1 p
+		{
+			font-size: 24px;
+			margin-left: 10px;
+		}
+	</style>
+</head>
+<body background="image3.png">
+<form  name="myForm">
+	<div class="div1">
+		<p id="admin_data"></p>
+		<table id="table1">
+			<tr>
+				<td><a href="dashboard.html">Dashboard</a></td>
+			</tr>
+			<tr>
+				<td><a href="user.html">Users</a></td>
+			</tr>
+			<tr>
+				<td><a href="loginSession.html">Login Session</a></td>
+			</tr>
+			<tr>
+				<td><a href="Login.html">Logout</a></td>
+			</tr>			
+		</table>
+	</div>
+
+	<div class="div2">
+		<h2>Add User</h2>
+		<center>
+		<form>
+		<input type="text" id="name" placeholder="Name" required>
+		<input type="email" id="email" placeholder="Email" required >
+		<input type="password" id="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Please Enter at least 8 charchter ,1 Uppercase ,1 lowercase,1 digit " required>
+		<input type="date" id="date" placeholder="Birthdate" required><br>
+		<input type="button" name="name" value="Add User" id="submit" onclick="add_data()">
+		</form>
+
+		 <h2 style="text-align: left">User List</h2><br>
+			<table class="list" id="table2">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Password</th>
+						<th>Birthdate</th>
+						<th>Age</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+		</td>
+	</table>
+	</center>
+	</div>
+</form>
+
+
+<script type="text/javascript">
+		var admin2=JSON.parse(localStorage.getItem("Admin"))
+		document.getElementById("admin_data").innerHTML="Hello , "+admin2.name;
+		var array=new Array();
+		var idx=0;
+		var isEdit=false;
+		//var array2=new Array();
+		//var array3=new Array();
+		
+		function calculateAge(){
+			var userinput = document.getElementById('date').value;
+			var dob = new Date(userinput);
+			var mon_diff = Date.now() - dob.getTime();
+			var age_dt = new Date(mon_diff);
+			var year = age_dt.getUTCFullYear();
+			var age = Math.abs(year-1970);
+			return age;
+		}
+		function add_data()
+		{
+		
+		//	localStorage.setItem("log",JSON.stringify(array2));
+			
+			var check1=document.getElementById("name").value;
+			var check2=document.getElementById("email").value;
+			var check3=document.getElementById("password").value;
+			var check4=document.getElementById("date").value;
+			if(check1==""){
+				alert("please enter name..");
+				return false;
+			}
+			else if(check2=="")
+			{
+				alert("please enter email..");
+				return false;
+			}
+			else if(check3=="")
+			{
+				alert("please enter password..");
+				return false;
+			}
+			else if(check4=="")
+			{
+				alert("please enter Birthdate..");
+				return false;
+			}
+			if(isEdit==true)
+			{
+				var age= calculateAge();
+				var get=JSON.parse(localStorage.getItem("Users"));
+		
+			get[idx].name=document.getElementById("name").value;
+			get[idx].email=document.getElementById("email").value;
+			get[idx].password=document.getElementById("password").value;
+			get[idx].date=document.getElementById("date").value;
+			get[idx].Age1=age;
+
+			document.getElementById("submit").value="Add User";
+			
+			localStorage.setItem("Users",JSON.stringify(get));
+			document.getElementById("name").value="";
+			document.getElementById("email").value="";
+			document.getElementById("password").value="";
+			document.getElementById("date").value="";
+				show_data();
+				isEdit=false;
+				return;
+
+			}
+			get_data();
+			var age= calculateAge();
+			array.push({
+				id: Math.random(),
+				name:document.getElementById("name").value,
+				email:document.getElementById("email").value,
+				password:document.getElementById("password").value,
+				date:document.getElementById("date").value,
+				Age1:age
+				//login:array2,
+				//logout:array3
+			});
+			
+			localStorage.setItem("Users",JSON.stringify(array));
+			document.getElementById("name").value="";
+			document.getElementById("email").value="";
+			document.getElementById("password").value="";
+			document.getElementById("date").value="";
+			show_data();
+		}
+		function get_data()
+		{
+			var str=localStorage.getItem("Users");
+			if(str!=null)
+			{
+			array=JSON.parse(str);
+			}
+		}
+		function show_data()
+		{
+			get_data();
+			var tbl=document.getElementById("table2");
+
+			var x=tbl.rows.length;
+			while(--x){
+				tbl.deleteRow(x);
+			}
+			for(i=0;i<array.length;i++)
+			{
+			var r=tbl.insertRow();
+			var id=array[i].id;
+			console.log(id);
+			var cell1=r.insertCell();
+			var cell2=r.insertCell();
+			var cell3=r.insertCell();
+			var cell4=r.insertCell();
+			var cell5=r.insertCell();
+			var cell6=r.insertCell();
+
+			cell1.innerHTML=array[i].name;
+			cell2.innerHTML=array[i].email;
+			cell3.innerHTML=array[i].password;
+			cell4.innerHTML=array[i].date;
+			cell5.innerHTML=array[i].Age1;
+
+			cell6.innerHTML=`<a href="#" onClick="editTable(${id})">Edit</a> <a href="#" onClick="deleteData(${id})">Delete</a>`;  
+			}
+		}
+
+		
+		function deleteData(id)
+		{
+			var get=JSON.parse(localStorage.getItem("Users"));
+			//console.log(typeof get);
+			for(i=0;i<get.length;i++)
+			{ 
+				var temp=get[i];
+				console.log(temp.id);
+				if(temp.id==id)
+				{
+					get.splice(i,1);
+					break;
+				}
+			}
+			 localStorage.removeItem("Users");
+			 localStorage.setItem("Users",JSON.stringify(get));
+			 show_data();
+
+		}
+		function editTable(id)
+		{
+			isEdit=true;
+			var get=JSON.parse(localStorage.getItem("Users"));
+			for(i=0;i<get.length;i++)
+			{ 
+				var temp=get[i];
+				console.log(temp.id);
+				if(temp.id==id)
+				{
+					idx=i;
+			document.getElementById("name").value=temp.name;
+			document.getElementById("email").value=temp.email;
+			document.getElementById("password").value=temp.password;
+			document.getElementById("date").value=temp.date;
+			document.getElementById("submit").value="Update User";
+			break;
+				}
+
+			}
+		}
+			show_data();
+		
+	
+
+</script>
+</body>
+</html>

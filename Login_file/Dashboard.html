@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashbord Page</title>
+	<style type="text/css">
+		.div1
+		{
+			height: 600px;
+			width:200px;
+			border:2px solid black;
+			float: left;
+			background-color: #e6ffbd;
+			font-family: lucida handwriting;
+		} 
+		.div2
+		{
+			height: 600px;
+			width:900px;
+			border:2px solid black;
+			float: left;
+            background-color: white;
+			font-family: lucida handwriting;
+		} 
+		.div2 h2
+		{
+			margin-left: -680px;
+		}
+		.div2 .div3
+		{
+			height: 150px;
+			width:250px;
+			border:2px solid black;
+			margin-left: 30px;
+			background-color: #e6ffbd;
+			float:left;
+			font-family: Times new roman;
+        }
+		.div2 .div4
+		{
+			height: 150px;
+			width:250px;
+			border:2px solid black;
+			margin-left: 30px;
+			background-color: darkolivegreen;
+			color:white;
+			float:left;
+			font-family: Times new Roman;
+		} 
+		.div2 .div5
+		{
+			height: 150px;
+			width:250px;
+			border:2px solid black;
+			margin-left: 30px;
+			background-color: darkkhaki;
+			float:left;
+			font-family: Times new Roman;
+		} 
+		.div1 #table1
+		{
+			margin-top: 25px;
+			padding: 10px;
+			border-spacing: 20px;
+		}
+		.div1 p
+		{
+			font-size: 24px;
+			margin-left: 10px;
+		}
+		.div2 .div6
+		{
+			margin-top: 250px;
+			margin-left: 10px;
+			font-size: 24px;
+		}
+	</style>
+</head>
+<body background="image3.png">
+	
+<form>
+	<div class="div1">
+		<p id="admin_data"></p>
+		<table id="table1">
+			<tr>
+				<td><a href="Dashboard.html">Dashboard</a></td>
+			</tr>
+			<tr>
+				<td><a href="User.html">Users</td>
+			</tr>
+			<tr>
+				<td><a href="UserSession.html">Login Session</a></td>
+			</tr>
+			<tr>
+				<td><a href="Login.html">Logout</a></td>
+			</tr>			
+		</table>
+	</div>
+	<center>
+	<div class="div2">
+		<h2>Dashboard</h2>
+		<div class="div3">
+			<h1 >Users < 18 Years</h1>
+			<p id="teen">User</p>
+		</div>
+		<div class="div4">
+			<h1 >18-50 Years Users</h1>
+			<p id="adult">User</p>
+		</div>
+		<div class="div5">
+			<h1 >Users > 50 years</h1>
+			<p id="old">User</p>
+		</div>
+		<div class="div6" id="birth">
+			<p id="birthdate"></p>
+		</div>
+		</div>
+	</div>
+</form>
+</center>
+<script>
+	var admin2=JSON.parse(localStorage.getItem("Admin"))
+	document.getElementById("admin_data").innerHTML="Hello , "+admin2.name;
+	var counter=0,counter1=0,counter2=0;
+	var date=new Date();
+	var month=date.getMonth();
+	var number=date.getDate();
+	var date1 = JSON.parse(localStorage.getItem("Users"));
+	for(i=0;i<date1.length;i++)
+	{
+			if(date1[i].Age1 < 18)
+			{
+				counter++;
+				document.getElementById("teen").innerHTML=counter +"  "+"Users";
+			}
+			else if(date1[i].Age1 > 18 && date1[i].Age1 <50)
+			{
+				counter1++;
+				document.getElementById("adult").innerHTML=counter1 +"  "+"Users";
+			}
+			else if(date1[i].Age1>50)
+			{
+				counter2++;
+				document.getElementById("old").innerHTML=counter2 +"  "+"Users";
+			}
+	}	
+	for(var i=0;i<date1.length;i++)
+			{
+				 var demo = new Date(date1[i].date);
+				
+	 			if(demo.getMonth()==month && demo.getDate()==number)
+	 			{	
+	 				document.getElementById("birth").innerHTML+="Today's "+date1[i].name + " Birthday </br>";
+	 			}
+			}
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration Page</title>
+	
+    <style>
+       
+         .reg{
+            height: 450px;
+            width: 350px;
+            border: 5px solid black;
+            background-color: #e6ffbd;
+            margin-top: 150px;
+            font-family: lucida handwriting;
+            border-radius: 15px;
+        }
+        .reg #login{
+         background-color: #68974b;
+            font-size:18px;
+            border-radius: 5px;
+        }
+        .reg input{
+            width: 250px;
+            font-size: 16px;
+            font-family: Cursive;
+        }
+        .reg select{
+            width: 260px;
+            font-size: 16px;
+        }
+        .reg #check{
+            width: 20px;
+            height: 10px;
+        }
+    </style>
+</head>
+
+<body background="image3.png">
+<center>
+	<div class="reg">
+	<form action="Login.html" method="post" name="myForm">
+		
+		<h2 style="text-align: center">Registration</h2>
+		
+		<input type="text" name="name" id="name" placeholder="Name" required><br><br>
+		
+		<input type="email" id="email" placeholder="Email"><br><br>
+        
+        <input type="password" id="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Please Enter at least 8 charchter ,1 Uppercase ,1 lowercase,1 digit "><br><br>
+       
+        <input type="password" id="Checkpass" placeholder="Confirm Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"><br><br>
+       
+        <select id="city">
+        	<option value=""disabeld selected hidden>Select City</option>
+        	<option>Ahmedabad</option>
+        	<option>Surat</option>
+        	<option>Baroda</option>
+        	<option>Rajkot</option>
+        	<option>Jaipur</option>
+        </select><br><br>
+      
+        <select id="state">
+        	<option value=""disabeld selected hidden>Select State</option>
+        	<option>Gujarat</option>
+        	<option>Rajasthan</option>
+        	<option>Kerala</option>
+        	<option>Maharastra</option>
+        	<option>Goa</option>
+        </select><br><br>
+       
+        <input type="checkbox" id="check" name="checkbox">Terms & Conditions<br><br>
+       <input type="submit" name="register" id="login" value="Register Now" onclick="demo()">
+	</form>
+</center>
+<script type="text/javascript">
+    //  var array = [];
+      function demo(){
+          var name = document.getElementById("name").value;
+          var email = document.getElementById("email").value;
+          var password = document.getElementById("password").value;
+          var Checkpass= document.getElementById("Checkpass").value;
+          var city= document.getElementById("city").value;
+          var state= document.getElementById("state").value;
+          var check= document.getElementById("check").checked;
+          if(name== "")
+          {
+              alert("Please Enter Name here");
+              return false;
+          }
+          else if(email == ""){
+              alert("Please Enter Email here");
+              return false;
+          }
+          else if(password == ""){
+              alert("Please Enter Password here");
+              return false;
+
+          }
+           else if(Checkpass == "")
+          {
+              alert ("Please enter confirm password");
+              return false;
+          }
+          else if(password!=Checkpass)
+          {
+              alert ("\nPassword did not match: Please try again...")
+              return false;
+          }
+          else if(city=="")
+          {
+              alert ("Please Select City");
+              return false;
+          }
+          else if(state=="")
+          {
+              alert("Please Select State");
+              return false;
+          }
+          else if(check=="")
+          {
+              alert("Please selete checkbox..")
+              return false;
+          }
+         
+          else
+          {
+                  const admin1={
+                          "name" : name,
+                          "email" : email,
+                          "password" : password,
+                          "Checkpass":Checkpass,
+                          "city":city,
+                          "state":state
+                      }
+              localStorage.setItem("Admin",JSON.stringify(admin1));
+          }
+      }
+  </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <title>Login page</title>
+         <style type="text/css">
+         .login
+        {
+            margin-top: 200px;
+            height: 350px;
+            width: 350px;
+            border: 5px solid black;
+            background-color: #e6ffbd;
+            font-family: lucida handwriting;
+            border-radius: 15px;
+        }
+        .login input
+        {
+            height:30px;
+            width: 300px;
+            font-size: 16px;
+            font-family: cursive;
+        }
+        .login #login
+        {
+            background-color: #68974b;
+            border-radius: 5px;
+        }
+        .login #register
+        {
+            background-color: #68974b;
+            border-radius: 5px;
+        }
+         </style>
+    </head>
+    <body background="image3.png">
+    <center>
+        <div class="login">
+            <form>
+                <h2 style="text-align: center">LOGIN</h2>
+                <input type="email" id="email" placeholder="Email"><br><br>
+                <input type="password" id="password" placeholder="Password"><br><br>
+                <input type="button" name="login" id="login" value="Login" onclick="demo()">
+                <p >OR</p>
+                <input type="button" name="register" id="register" value="Register Now" onclick="demo2()">
+            </form>
+        </div>
+    </center>
+    <script type="text/javascript">
+     
+        var admin1 =JSON.parse(localStorage.getItem('Admin'));
+        var user1 =JSON.parse(localStorage.getItem("Users"));
+        var data_login=new Array();
+        
+      // var date=new Date();
+        
+              
+             if(admin1 !=null){
+                    document.getElementById("register").disabled = true;
+             }
+             
+            function demo(){
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+                
+                if(email == ""){
+                    alert("Please Enter Email!!");
+                    return false;
+                } 
+                else if(password.length == ""){
+                    alert("Please Enter Password!!");
+                    return false;
+                }
+               else if(admin1.email != email){
+                for(var  i=0;i<user1.length;i++)
+                    {
+                         if(user1[i].email==email)
+                         {
+                            if(user1[i].password==password)
+                             {
+                                const user2=
+                                {
+                                     "email":email,
+                                     "password":password
+                                    
+                                 }
+                                var user_data=
+                                {
+                                    "name":user1[i].name,
+                                    "loginTime":new Date(),
+                                    "logoutTime":""
+
+                                }
+                                data_login.push(user_data);
+                                localStorage.setItem("User_Login",JSON.stringify(data_login));
+
+                                 sessionStorage.setItem("Temp",JSON.stringify(user2));
+                                 window.location="SubUser.html";
+
+                            }
+                        else
+                        {
+                            alert("Please Enter valid password");
+                            return false;
+                        }
+                    }
+                }
+            }
+                else if(admin1.password != password)
+                {
+                    alert("Please Enter Valid Password..");
+                    return false;
+                }
+                else{
+                     window.location="dashboard.html";
+                     }
+            }
+            function demo2(){
+                window.location="Registration.html";
+            }
+        </script>
+    </body>
+    
+</html>
+

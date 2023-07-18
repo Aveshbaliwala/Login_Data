@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Subuser Page</title>
+	<style type="text/css">
+		.div1
+		{
+			height: 600px;
+			width:200px;
+			border:2px solid black;
+			float: left;
+			background-color: #e6ffbd;
+            font-family: lucida handwriting;
+		} 
+		.div2
+		{
+			height: 600px;
+			width:900px;
+			border:2px solid black;
+			float: left;
+            background-color: white;
+            font-family: lucida handwriting;
+		} 
+		.div2 h2
+		{
+			margin-left: 30px;
+		}
+		.div2 .div3
+		{
+			height: 150px;
+			width:250px;
+			border:2px solid black;
+			margin-left: 30px;
+			background-color: #e6ffbd;
+			float:left;
+		} 
+		.div2 .div4
+		{
+			height: 150px;
+			width:250px;
+			border:2px solid black;
+			margin-left: 30px;
+			background-color: darkolivegreen;
+			color:white;
+			float:left;
+		} 
+		.div2 .div5
+		{
+			height: 150px;
+			width:250px;
+			border:2px solid black;
+			margin-left: 30px;
+			background-color: darkkhaki;
+			float:left;
+		} 
+		.div1 #table1
+		{
+			margin-top: 25px;
+			padding: 10px;
+			border-spacing: 20px;
+		}
+        .div1 p
+		{
+			font-size: 20px;
+			margin-left: 10px;
+		}
+		.div2 #birthdate
+		{
+			text-align: center;
+			color:purple;
+			font-size: 32px;
+			font-family: cursive;
+		}
+	</style>
+</head>
+<body background="image3.png">
+<form>
+	<div class="div1">
+        <p id="User_data"></p>
+		<table id="table1">
+			<tr>
+				<td><a href="SubUser.html">Dashboard</a></td>
+			</tr>
+			<tr onclick="logout()">
+				<td>Logout</td>
+			</tr>			
+		</table>
+	</div>
+	<div class="div2">
+        <h2 style="text-align: center">Welcome to Cybercom Creation</h2>
+		<h2 id ="birthdate"></h2>
+    </div>
+    </form>
+    <script>
+		var date = new Date();
+		var month = date.getMonth();
+		var num=date.getDate();
+		var date1 = JSON.parse(localStorage.getItem("Users"));
+		var User_data=JSON.parse(sessionStorage.getItem("Temp"));
+		var login_user = JSON.parse(localStorage.getItem("User_Login"));
+		for(i=0;i<date1.length;i++)
+		 {
+		 if(date1[i].email==User_data.email && date1[i].password==User_data.password)
+		 {
+			document.getElementById("User_data").innerHTML="Hello , "+date1[i].name;
+		 }
+	 	}
+	 	for(var i=0;i<date1.length;i++)
+	  	{
+			if(date1[i].email==User_data.email && date1[i].password==User_data.password)
+			{
+	 	 		var demo = new Date(date1[i].date);
+	  			if(demo.getMonth()==month && demo.getDate()==num)
+	  			{	
+	  				document.getElementById("birthdate").innerHTML="Happy Birthday!!";
+	  			}
+			}
+			else
+			{
+				document.getElementById("birthdate").innerHTML="";
+			}
+	  }
+	  function logout()
+	  {
+	  	for(i=0;i<date1.length;i++)
+	  	{
+	  		 if(date1[i].email==User_data.email && date1[i].password==User_data.password)
+	  		 {
+	  		 	for(i=0;i<login_user.length;i++)
+	  		 	{
+	  		 		login_user[i].logoutTime=date;
+	  		 		localStorage.setItem("User_Login",JSON.stringify(login_user[i]));
+	  		 	}
+	  		}
+	  		 	window.location="Login.html";
+	 }
+}
+    </script>
+    </body>
+    </html>
